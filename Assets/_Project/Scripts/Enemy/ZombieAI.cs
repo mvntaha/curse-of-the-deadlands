@@ -12,7 +12,7 @@ namespace Deadlands.Enemy
     /// rather than changing this class.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent), typeof(Health))]
-    public class ZombieAI : MonoBehaviour, IPoolable, IGrabber, IHitZoneProvider
+    public class ZombieAI : MonoBehaviour, IPoolable, IGrabber, IHitZoneProvider, IStaggerable
     {
         static readonly int SpeedHash = Animator.StringToHash("Speed");
         static readonly int LocomotionSpeedHash = Animator.StringToHash("LocomotionSpeed");
@@ -237,6 +237,15 @@ namespace Deadlands.Enemy
             {
                 ChangeState(HasLiveTarget ? Pursue : Wander);
             }
+        }
+
+        // ---------- IStaggerable ----------
+
+        public void ForceStagger(float duration, Vector3 push)
+        {
+            if (Health.IsDead || CurrentState == Dead || CurrentState == Grab) return;
+            if (Agent.enabled && push.sqrMagnitude > 0f) Agent.Move(push);
+            BeginStagger(duration, force: true); // stagger resumes the chase afterwards
         }
 
         // ---------- IHitZoneProvider ----------
