@@ -16,7 +16,7 @@ namespace Deadlands.Core.Input
         [SerializeField] string actionMapName = "Player";
 
         InputActionMap map;
-        InputAction move, look, sprint, aim, dodge, swapShoulder, attack;
+        InputAction move, look, sprint, aim, attack;
 
         public InputActionAsset Actions => actions;
         public ControlSettings Settings => controlSettings;
@@ -27,10 +27,18 @@ namespace Deadlands.Core.Input
         public Vector2 LookDegrees { get; private set; }
         public bool SprintHeld { get; private set; }
         public bool AimHeld { get; private set; }
+        /// <summary>Attack/fire button held (automatic weapons).</summary>
+        public bool AttackHeld { get; private set; }
 
         public event Action DodgePressed;
         public event Action SwapShoulderPressed;
         public event Action AttackPressed;
+        public event Action ReloadPressed;
+        public event Action NextWeaponPressed;
+        public event Action PrevWeaponPressed;
+        /// <summary>Weapon slot chosen directly (0-based).</summary>
+        public event Action<int> SlotPressed;
+        public event Action StrugglePressed;
 
         void Awake()
         {
@@ -40,25 +48,45 @@ namespace Deadlands.Core.Input
             look = map.FindAction("Look", true);
             sprint = map.FindAction("Sprint", true);
             aim = map.FindAction("Aim", true);
-            dodge = map.FindAction("Dodge", true);
-            swapShoulder = map.FindAction("SwapShoulder", true);
             attack = map.FindAction("Attack", true);
         }
 
         void OnEnable()
         {
-            dodge.performed += OnDodge;
-            swapShoulder.performed += OnSwapShoulder;
-            attack.performed += OnAttack;
+            Bind("Dodge", () => DodgePressed?.Invoke());
+            Bind("SwapShoulder", () => SwapShoulderPressed?.Invoke());
+            Bind("Attack", () => AttackPressed?.Invoke());
+            Bind("Reload", () => ReloadPressed?.Invoke());
+            Bind("NextWeapon", () => NextWeaponPressed?.Invoke());
+            Bind("PrevWeapon", () => PrevWeaponPressed?.Invoke());
+            Bind("Struggle", () => StrugglePressed?.Invoke());
+            for (int i = 0; i < 4; i++)
+            {
+                int slot = i;
+                Bind("Slot" + (i + 1), () => SlotPressed?.Invoke(slot));
+            }
             map.Enable();
         }
 
         void OnDisable()
         {
-            dodge.performed -= OnDodge;
-            swapShoulder.performed -= OnSwapShoulder;
-            attack.performed -= OnAttack;
+            foreach (var (action, handler) in bound) action.performed -= handler;
+            bound.Clear();
             map.Disable();
+            Move = Vector2.zero;
+            LookDegrees = Vector2.zero;
+            SprintHeld = AimHeld = AttackHeld = false;
+        }
+
+        readonly System.Collections.Generic.List<(InputAction, Action<InputAction.CallbackContext>)> bound =
+            new System.Collections.Generic.List<(InputAction, Action<InputAction.CallbackContext>)>();
+
+        void Bind(string actionName, Action callback)
+        {
+            InputAction action = map.FindAction(actionName, true);
+            Action<InputAction.CallbackContext> handler = _ => callback();
+            action.performed += handler;
+            bound.Add((action, handler));
         }
 
         void Update()
@@ -66,6 +94,7 @@ namespace Deadlands.Core.Input
             Move = Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f);
             SprintHeld = sprint.IsPressed();
             AimHeld = aim.IsPressed();
+            AttackHeld = attack.IsPressed();
             LookDegrees = ReadLook();
         }
 
@@ -84,9 +113,5 @@ namespace Deadlands.Core.Input
             if (controlSettings.invertY) degrees.y = -degrees.y;
             return degrees;
         }
-
-        void OnDodge(InputAction.CallbackContext _) => DodgePressed?.Invoke();
-        void OnSwapShoulder(InputAction.CallbackContext _) => SwapShoulderPressed?.Invoke();
-        void OnAttack(InputAction.CallbackContext _) => AttackPressed?.Invoke();
     }
 }
