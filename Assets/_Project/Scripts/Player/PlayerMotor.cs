@@ -15,6 +15,8 @@ namespace Deadlands.Player
         [SerializeField] PlayerInputReader input;
         [Tooltip("Transform whose facing defines 'forward' for movement input (the gameplay camera).")]
         [SerializeField] Transform viewTransform;
+        [Tooltip("Optional. When set, sprinting drains it and dodging costs it.")]
+        [SerializeField] PlayerStamina stamina;
 
         CharacterController controller;
         Vector3 horizontalVelocity;
@@ -89,6 +91,7 @@ namespace Deadlands.Player
             Vector3 wish = IsMovementLocked ? Vector3.zero : WishDirection();
             IsAiming = input.AimHeld && !IsMovementLocked;
             IsSprinting = input.SprintHeld && !IsAiming && wish.sqrMagnitude > 0.01f;
+            if (IsSprinting && stamina && !stamina.Drain(config.sprintStaminaPerSecond, dt)) IsSprinting = false;
 
             float maxSpeed = IsAiming ? config.aimMoveSpeed : IsSprinting ? config.runSpeed : config.walkSpeed;
             Vector3 targetVelocity = wish * maxSpeed;
@@ -106,6 +109,7 @@ namespace Deadlands.Player
         void TryStartDodge()
         {
             if (!enabled || IsDodging || IsMovementLocked || dodgeCooldownTimer > 0f || !controller.isGrounded) return;
+            if (stamina && !stamina.TrySpend(config.dodgeStaminaCost)) return;
 
             Vector3 wish = WishDirection();
             dodgeDirection = wish.sqrMagnitude > 0.01f ? wish.normalized : transform.forward;

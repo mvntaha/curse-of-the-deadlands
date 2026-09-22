@@ -23,6 +23,10 @@ namespace Deadlands.Player
         public float gravity = -20f;
         public float groundedStickForce = -2f;
 
+        [Header("Stamina")]
+        public float sprintStaminaPerSecond = 14f;
+        public float dodgeStaminaCost = 20f;
+
         [Header("Dodge (roll)")]
         public float dodgeDistance = 3.2f;
         public float dodgeDuration = 0.6f;

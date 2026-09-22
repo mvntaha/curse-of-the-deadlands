@@ -139,6 +139,42 @@
                                          "processors":  "",
                                          "interactions":  "",
                                          "initialStateCheck":  false
+                                     },
+                                     {
+                                         "name":  "Interact",
+                                         "type":  "Button",
+                                         "id":  "a1f3c0d2-6b1e-4a53-8f0e-1c2d3e4f5a21",
+                                         "expectedControlType":  "Button",
+                                         "processors":  "",
+                                         "interactions":  "",
+                                         "initialStateCheck":  false
+                                     },
+                                     {
+                                         "name":  "UseHeal",
+                                         "type":  "Button",
+                                         "id":  "a1f3c0d2-6b1e-4a53-8f0e-1c2d3e4f5a22",
+                                         "expectedControlType":  "Button",
+                                         "processors":  "",
+                                         "interactions":  "",
+                                         "initialStateCheck":  false
+                                     },
+                                     {
+                                         "name":  "Inventory",
+                                         "type":  "Button",
+                                         "id":  "a1f3c0d2-6b1e-4a53-8f0e-1c2d3e4f5a23",
+                                         "expectedControlType":  "Button",
+                                         "processors":  "",
+                                         "interactions":  "",
+                                         "initialStateCheck":  false
+                                     },
+                                     {
+                                         "name":  "Shove",
+                                         "type":  "Button",
+                                         "id":  "a1f3c0d2-6b1e-4a53-8f0e-1c2d3e4f5a24",
+                                         "expectedControlType":  "Button",
+                                         "processors":  "",
+                                         "interactions":  "",
+                                         "initialStateCheck":  false
                                      }
                                  ],
                      "bindings":  [
@@ -375,33 +411,11 @@
                                       },
                                       {
                                           "name":  "",
-                                          "id":  "b2a1c3d4-0001-4000-8000-000000000024",
-                                          "path":  "\u003cGamepad\u003e/rightShoulder",
-                                          "interactions":  "",
-                                          "processors":  "",
-                                          "groups":  "Gamepad",
-                                          "action":  "NextWeapon",
-                                          "isComposite":  false,
-                                          "isPartOfComposite":  false
-                                      },
-                                      {
-                                          "name":  "",
                                           "id":  "b2a1c3d4-0001-4000-8000-000000000025",
                                           "path":  "\u003cMouse\u003e/scroll/down",
                                           "interactions":  "",
                                           "processors":  "",
                                           "groups":  "Keyboard\u0026Mouse",
-                                          "action":  "PrevWeapon",
-                                          "isComposite":  false,
-                                          "isPartOfComposite":  false
-                                      },
-                                      {
-                                          "name":  "",
-                                          "id":  "b2a1c3d4-0001-4000-8000-000000000026",
-                                          "path":  "\u003cGamepad\u003e/leftShoulder",
-                                          "interactions":  "",
-                                          "processors":  "",
-                                          "groups":  "Gamepad",
                                           "action":  "PrevWeapon",
                                           "isComposite":  false,
                                           "isPartOfComposite":  false
@@ -513,6 +527,94 @@
                                           "processors":  "",
                                           "groups":  "Gamepad",
                                           "action":  "Struggle",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000041",
+                                          "path":  "\u003cKeyboard\u003e/f",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Keyboard\u0026Mouse",
+                                          "action":  "Interact",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000042",
+                                          "path":  "\u003cGamepad\u003e/buttonSouth",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Gamepad",
+                                          "action":  "Interact",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000043",
+                                          "path":  "\u003cKeyboard\u003e/h",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Keyboard\u0026Mouse",
+                                          "action":  "UseHeal",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000044",
+                                          "path":  "\u003cGamepad\u003e/leftShoulder",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Gamepad",
+                                          "action":  "UseHeal",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000045",
+                                          "path":  "\u003cKeyboard\u003e/tab",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Keyboard\u0026Mouse",
+                                          "action":  "Inventory",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000046",
+                                          "path":  "\u003cGamepad\u003e/select",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Gamepad",
+                                          "action":  "Inventory",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000047",
+                                          "path":  "\u003cKeyboard\u003e/v",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Keyboard\u0026Mouse",
+                                          "action":  "Shove",
+                                          "isComposite":  false,
+                                          "isPartOfComposite":  false
+                                      },
+                                      {
+                                          "name":  "",
+                                          "id":  "b2a1c3d4-0001-4000-8000-000000000048",
+                                          "path":  "\u003cGamepad\u003e/rightShoulder",
+                                          "interactions":  "",
+                                          "processors":  "",
+                                          "groups":  "Gamepad",
+                                          "action":  "Shove",
                                           "isComposite":  false,
                                           "isPartOfComposite":  false
                                       }

@@ -49,6 +49,15 @@ namespace Deadlands.Core.Combat
             return true;
         }
 
+        /// <summary>Raises/lowers max HP (upgrades). Current HP moves by the same delta so an upgrade also heals.</summary>
+        public void SetMax(float newMax)
+        {
+            float delta = newMax - maxHealth;
+            maxHealth = Mathf.Max(1f, newMax);
+            if (!IsDead) Current = Mathf.Clamp(Current + Mathf.Max(0f, delta), 0f, maxHealth);
+            Healed?.Invoke(this);
+        }
+
         public void Heal(float amount)
         {
             if (IsDead || amount <= 0f) return;

@@ -87,6 +87,11 @@ namespace Deadlands.Combat
         public WeaponInstance Current => currentIndex >= 0 && currentIndex < loadout.Count ? loadout[currentIndex] : fistsInstance;
         public IReadOnlyList<WeaponInstance> Loadout => loadout;
         public bool IsReloading => reloadCompleteAt > 0f;
+        /// <summary>Upgrade hook: multiplies every reload time (0.7 = 30% faster).</summary>
+        public float ReloadTimeMultiplier { get; set; } = 1f;
+        /// <summary>Upgrade hook: multiplies melee damage.</summary>
+        public float MeleeDamageMultiplier { get; set; } = 1f;
+        public float CurrentReloadTime => Current.data.reloadTime * ReloadTimeMultiplier;
         public AmmoStore Ammo => ammoStore;
 
         public event Action<WeaponInstance> Equipped;
@@ -328,9 +333,9 @@ namespace Deadlands.Combat
             if (!w.data.IsRanged || IsReloading || !CanAct || Time.time < busyUntil) return;
             if (w.ammoInMagazine >= w.data.magazineSize || ammoStore.Get(w.data.ammoType) <= 0) return;
 
-            reloadCompleteAt = Time.time + w.data.reloadTime;
+            reloadCompleteAt = Time.time + CurrentReloadTime;
             busyUntil = reloadCompleteAt;
-            animationController.PlayReload(w.data.reloadTime);
+            animationController.PlayReload(CurrentReloadTime);
             ReloadStarted?.Invoke(w);
         }
 
@@ -380,7 +385,7 @@ namespace Deadlands.Combat
                 var target = meleeHits[i].GetComponentInParent<IDamageable>();
                 if (target == null || ReferenceEquals(target, ownerHealth) || !meleeVictims.Add(target)) continue;
                 Vector3 point = meleeHits[i].ClosestPoint(center);
-                if (target.TakeDamage(new DamageInfo(w.data.damage, point, transform.forward, w.data.knockbackForce, gameObject)))
+                if (target.TakeDamage(new DamageInfo(w.data.damage * MeleeDamageMultiplier, point, transform.forward, w.data.knockbackForce, gameObject)))
                 {
                     connected++;
                     SpawnImpact(point, -transform.forward, meleeHits[i].GetComponentInParent<IHitZoneProvider>() != null);
