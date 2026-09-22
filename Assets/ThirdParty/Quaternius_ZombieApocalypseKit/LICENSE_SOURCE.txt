@@ -1,0 +1,5 @@
+Source: https://quaternius.com/packs/zombieapocalypsekit.html
+Author: Quaternius (quaternius.com)
+License: CC0 1.0 Universal (public domain) - https://creativecommons.org/publicdomain/zero/1.0/
+Downloaded: 2026-09-22 via the official Google Drive link on that page (FBX folders only)
+Note: Bundled License.txt has a stale 'Ultimate Platformer Pack' header; the license body (and the pack page) state CC0.
