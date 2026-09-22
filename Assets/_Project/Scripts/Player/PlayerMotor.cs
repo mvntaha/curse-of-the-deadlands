@@ -23,7 +23,10 @@ namespace Deadlands.Player
         float dodgeCooldownTimer;
         float dodgeBaseSpeed;
         Vector3 dodgeDirection;
+        int movementLocks;
 
+        /// <summary>True while something (grab, melee swing, cutscene) holds the player in place.</summary>
+        public bool IsMovementLocked => movementLocks > 0;
         public bool IsAiming { get; private set; }
         public bool IsSprinting { get; private set; }
         public bool IsDodging { get; private set; }
@@ -70,10 +73,21 @@ namespace Deadlands.Player
             }
         }
 
+        /// <summary>Stack-style lock: every PushMovementLock needs a matching PopMovementLock.</summary>
+        public void PushMovementLock() => movementLocks++;
+        public void PopMovementLock() => movementLocks = Mathf.Max(0, movementLocks - 1);
+
+        /// <summary>Snaps the character to face a flat direction (used by grabs and melee targeting).</summary>
+        public void FaceDirection(Vector3 direction)
+        {
+            direction.y = 0f;
+            if (direction.sqrMagnitude > 0.0001f) transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        }
+
         void UpdateLocomotion(float dt)
         {
-            Vector3 wish = WishDirection();
-            IsAiming = input.AimHeld;
+            Vector3 wish = IsMovementLocked ? Vector3.zero : WishDirection();
+            IsAiming = input.AimHeld && !IsMovementLocked;
             IsSprinting = input.SprintHeld && !IsAiming && wish.sqrMagnitude > 0.01f;
 
             float maxSpeed = IsAiming ? config.aimMoveSpeed : IsSprinting ? config.runSpeed : config.walkSpeed;
@@ -82,7 +96,7 @@ namespace Deadlands.Player
             horizontalVelocity = Vector3.Lerp(horizontalVelocity, targetVelocity, 1f - Mathf.Exp(-rate * dt));
 
             Vector3 facing = IsAiming ? ViewForward() : wish;
-            if (facing.sqrMagnitude > 0.0001f)
+            if (!IsMovementLocked && facing.sqrMagnitude > 0.0001f)
             {
                 Quaternion target = Quaternion.LookRotation(facing, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, target, config.turnSpeed * dt);
@@ -91,7 +105,7 @@ namespace Deadlands.Player
 
         void TryStartDodge()
         {
-            if (!enabled || IsDodging || dodgeCooldownTimer > 0f || !controller.isGrounded) return;
+            if (!enabled || IsDodging || IsMovementLocked || dodgeCooldownTimer > 0f || !controller.isGrounded) return;
 
             Vector3 wish = WishDirection();
             dodgeDirection = wish.sqrMagnitude > 0.01f ? wish.normalized : transform.forward;

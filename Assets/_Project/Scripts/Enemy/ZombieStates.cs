@@ -150,6 +150,7 @@ namespace Deadlands.Enemy
             {
                 hitApplied = true;
                 ai.TryHitTarget();
+                if (ai.CurrentState != this) return; // the swing turned into a grab
             }
 
             if (timer >= ai.Data.attackDuration)
@@ -161,6 +162,53 @@ namespace Deadlands.Enemy
         }
 
         public override void Exit() => ai.Agent.isStopped = false;
+    }
+
+    /// <summary>Flinches after being hit: stops, plays the hit reaction, then resumes the chase.</summary>
+    public class StaggerState : ZombieState
+    {
+        float remaining;
+
+        public StaggerState(ZombieAI ai) : base(ai) { }
+
+        public void SetDuration(float seconds) => remaining = seconds;
+
+        public override void Enter()
+        {
+            ai.Agent.isStopped = true;
+            ai.Agent.velocity = Vector3.zero;
+            ai.PlayHitReaction();
+        }
+
+        public override void Tick(float dt)
+        {
+            remaining -= dt;
+            if (remaining > 0f) return;
+            ai.ChangeState(ai.HasLiveTarget ? ai.Pursue : ai.Wander);
+        }
+
+        public override void Exit() => ai.Agent.isStopped = false;
+    }
+
+    /// <summary>Holds the player while they struggle. The player's side decides how it ends.</summary>
+    public class GrabState : ZombieState
+    {
+        public GrabState(ZombieAI ai) : base(ai) { }
+
+        public override void Enter()
+        {
+            ai.Agent.isStopped = true;
+            ai.Agent.velocity = Vector3.zero;
+            ai.SetGrabbing(true);
+        }
+
+        public override void Tick(float dt) => ai.FaceTarget(dt);
+
+        public override void Exit()
+        {
+            ai.SetGrabbing(false);
+            ai.Agent.isStopped = false;
+        }
     }
 
     /// <summary>Ragdolls, lies there, sinks, then returns to the pool.</summary>

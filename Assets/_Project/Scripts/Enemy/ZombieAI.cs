@@ -7,16 +7,18 @@ using UnityEngine.AI;
 namespace Deadlands.Enemy
 {
     /// <summary>
-    /// NavMesh zombie driven by a small state machine (Wander → Pursue → Attack, Dead).
+    /// NavMesh zombie driven by a small state machine (Wander → Pursue → Attack, plus Stagger, Grab, Dead).
     /// Stats come from <see cref="ZombieData"/>; new zombie types override <see cref="CreateStates"/> or add states
     /// rather than changing this class.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent), typeof(Health))]
-    public class ZombieAI : MonoBehaviour, IPoolable
+    public class ZombieAI : MonoBehaviour, IPoolable, IGrabber, IHitZoneProvider
     {
         static readonly int SpeedHash = Animator.StringToHash("Speed");
         static readonly int LocomotionSpeedHash = Animator.StringToHash("LocomotionSpeed");
         static readonly int AttackHash = Animator.StringToHash("Attack");
+        static readonly int HitHash = Animator.StringToHash("Hit");
+        static readonly int GrabbingHash = Animator.StringToHash("Grabbing");
 
         [SerializeField] ZombieData data;
         [SerializeField] Animator animator;
@@ -31,8 +33,11 @@ namespace Deadlands.Enemy
 
         bool initialized;
         Health targetHealth;
+        IGrabbable targetGrabbable;
+        IGrabbable grabbedVictim;
         Vector3 sinkStart;
         bool sinking;
+        float staggerReadyAt;
 
         public ZombieData Data => data;
         public NavMeshAgent Agent { get; private set; }
@@ -44,6 +49,8 @@ namespace Deadlands.Enemy
         public ZombieState Wander { get; protected set; }
         public ZombieState Pursue { get; protected set; }
         public ZombieState Attack { get; protected set; }
+        public StaggerState Stagger { get; protected set; }
+        public ZombieState Grab { get; protected set; }
         public DeadState Dead { get; protected set; }
 
         public bool HasLiveTarget => Target && (!targetHealth || !targetHealth.IsDead);
@@ -65,6 +72,8 @@ namespace Deadlands.Enemy
             Wander = new WanderState(this);
             Pursue = new PursueState(this);
             Attack = new AttackState(this);
+            Stagger = new StaggerState(this);
+            Grab = new GrabState(this);
             Dead = new DeadState(this);
         }
 
@@ -98,6 +107,8 @@ namespace Deadlands.Enemy
         {
             initialized = true;
             sinking = false;
+            staggerReadyAt = 0f;
+            grabbedVictim = null;
             Health.ResetHealth(data.maxHealth);
             ragdoll.ResetPose();
             bodyCollider.enabled = true;
@@ -122,6 +133,7 @@ namespace Deadlands.Enemy
             }
             Target = cachedPlayer;
             targetHealth = Target ? Target.GetComponent<Health>() : null;
+            targetGrabbable = Target ? Target.GetComponent<IGrabbable>() : null;
         }
 
         public void ChangeState(ZombieState next)
@@ -184,6 +196,8 @@ namespace Deadlands.Enemy
         }
 
         public void PlayAttack() => animator.SetTrigger(AttackHash);
+        public void PlayHitReaction() => animator.SetTrigger(HitHash);
+        public void SetGrabbing(bool grabbing) => animator.SetBool(GrabbingHash, grabbing);
 
         public void TryHitTarget()
         {
@@ -193,20 +207,72 @@ namespace Deadlands.Enemy
             if (to.magnitude > data.attackRange + 0.4f) return;
             if (Vector3.Angle(transform.forward, to) > data.attackArc * 0.5f) return;
 
+            if (targetGrabbable != null && targetGrabbable.CanBeGrabbed && UnityEngine.Random.value < data.grabChance)
+            {
+                grabbedVictim = targetGrabbable;
+                ChangeState(Grab);
+                grabbedVictim.BeginGrab(this, new GrabSettings(data.grabPressesToEscape, data.grabDuration,
+                    data.grabDamagePerSecond, data.grabFailDamage));
+                return;
+            }
+
             var info = new DamageInfo(data.attackDamage, Target.position + Vector3.up * 1.2f, to, 0f, gameObject);
             targetHealth.TakeDamage(info);
+        }
+
+        // ---------- IGrabber ----------
+
+        public void OnGrabEnded(bool victimEscaped)
+        {
+            grabbedVictim = null;
+            if (Health.IsDead) return;
+            if (victimEscaped)
+            {
+                // Shoved off: stumble back and reel for a moment.
+                Vector3 back = -transform.forward * data.escapePushDistance;
+                if (Agent.enabled) Agent.Move(back);
+                BeginStagger(data.escapeStaggerDuration, force: true);
+            }
+            else
+            {
+                ChangeState(HasLiveTarget ? Pursue : Wander);
+            }
+        }
+
+        // ---------- IHitZoneProvider ----------
+
+        public float GetDamageMultiplier(Vector3 worldPoint, out bool isCritical)
+        {
+            isCritical = worldPoint.y - transform.position.y >= data.headHeight;
+            return isCritical ? data.headshotMultiplier : 1f;
         }
 
         // ---------- Health reactions ----------
 
         void OnDamaged(Health _, DamageInfo info)
         {
-            // Getting hit from anywhere pulls the zombie toward its attacker.
-            if (CurrentState == Wander && HasLiveTarget) ChangeState(Pursue);
+            if (Health.IsDead) return;
+            if (CurrentState == Grab) return; // committed to the grab
+            if (Time.time >= staggerReadyAt) BeginStagger(data.staggerDuration);
+            else if (CurrentState == Wander && HasLiveTarget) ChangeState(Pursue); // getting hit pulls it toward the player
+        }
+
+        void BeginStagger(float duration, bool force = false)
+        {
+            if (!force && Time.time < staggerReadyAt) return;
+            staggerReadyAt = Time.time + data.staggerCooldown;
+            Stagger.SetDuration(duration);
+            if (CurrentState == Stagger) Stagger.Enter(); // re-flinch
+            else ChangeState(Stagger);
         }
 
         void OnDied(Health _, DamageInfo info)
         {
+            if (grabbedVictim != null)
+            {
+                grabbedVictim.ReleaseFrom(this);
+                grabbedVictim = null;
+            }
             Dead.SetKillingBlow(info);
             ChangeState(Dead);
         }

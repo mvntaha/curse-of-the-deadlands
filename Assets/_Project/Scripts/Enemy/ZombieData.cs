@@ -44,6 +44,26 @@ namespace Deadlands.Enemy
         [Tooltip("Max angle (deg) between the zombie's facing and the target for the hit to connect.")]
         public float attackArc = 70f;
 
+        [Header("Hit reactions")]
+        [Tooltip("Height above the feet where hits count as headshots.")]
+        public float headHeight = 1.2f;
+        public float headshotMultiplier = 2.5f;
+        [Tooltip("How long a hit staggers (interrupts) the zombie.")]
+        public float staggerDuration = 0.55f;
+        [Tooltip("Minimum seconds between staggers so rapid fire can't stun-lock forever.")]
+        public float staggerCooldown = 1.2f;
+
+        [Header("Grab")]
+        [Tooltip("Chance that an attack becomes a grab (0 = never).")]
+        [Range(0f, 1f)] public float grabChance = 0.3f;
+        public int grabPressesToEscape = 8;
+        public float grabDuration = 3.5f;
+        public float grabDamagePerSecond = 4f;
+        public float grabFailDamage = 20f;
+        [Tooltip("Stagger length when the player breaks free.")]
+        public float escapeStaggerDuration = 1.4f;
+        public float escapePushDistance = 1.2f;
+
         [Header("Death")]
         [Tooltip("Seconds the ragdoll lies there before sinking and returning to the pool.")]
         public float corpseLifetime = 8f;
