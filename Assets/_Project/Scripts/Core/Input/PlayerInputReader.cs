@@ -16,7 +16,7 @@ namespace Deadlands.Core.Input
         [SerializeField] string actionMapName = "Player";
 
         InputActionMap map;
-        InputAction move, look, sprint, aim, dodge, swapShoulder;
+        InputAction move, look, sprint, aim, dodge, swapShoulder, attack;
 
         public InputActionAsset Actions => actions;
         public ControlSettings Settings => controlSettings;
@@ -30,6 +30,7 @@ namespace Deadlands.Core.Input
 
         public event Action DodgePressed;
         public event Action SwapShoulderPressed;
+        public event Action AttackPressed;
 
         void Awake()
         {
@@ -41,12 +42,14 @@ namespace Deadlands.Core.Input
             aim = map.FindAction("Aim", true);
             dodge = map.FindAction("Dodge", true);
             swapShoulder = map.FindAction("SwapShoulder", true);
+            attack = map.FindAction("Attack", true);
         }
 
         void OnEnable()
         {
             dodge.performed += OnDodge;
             swapShoulder.performed += OnSwapShoulder;
+            attack.performed += OnAttack;
             map.Enable();
         }
 
@@ -54,6 +57,7 @@ namespace Deadlands.Core.Input
         {
             dodge.performed -= OnDodge;
             swapShoulder.performed -= OnSwapShoulder;
+            attack.performed -= OnAttack;
             map.Disable();
         }
 
@@ -83,5 +87,6 @@ namespace Deadlands.Core.Input
 
         void OnDodge(InputAction.CallbackContext _) => DodgePressed?.Invoke();
         void OnSwapShoulder(InputAction.CallbackContext _) => SwapShoulderPressed?.Invoke();
+        void OnAttack(InputAction.CallbackContext _) => AttackPressed?.Invoke();
     }
 }
