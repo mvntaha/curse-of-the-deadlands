@@ -169,7 +169,7 @@ MonoBehaviour:
   pushOutSharpness: 6
   collisionMask:
     serializedVersion: 2
-    m_Bits: 4294967035
+    m_Bits: 4294965499
   collisionRadius: 0.2
   minDistance: 0.25
 --- !u!1 &2651448268247732940
@@ -218,6 +218,9 @@ GameObject:
   - component: {fileID: 2770721750483625506}
   - component: {fileID: 8991136442795393390}
   - component: {fileID: 2093264284246443571}
+  - component: {fileID: 7693424300379504225}
+  - component: {fileID: 8092730058158636106}
+  - component: {fileID: 1541609911765179319}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -319,6 +322,60 @@ MonoBehaviour:
   aimPitchWeight: 0.7
   maxAimPitch: 45
   aimPitchSharpness: 15
+--- !u!114 &7693424300379504225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390bfb38f1f13734cba78ab2e8ba1a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Core.Combat.Health
+  maxHealth: 100
+--- !u!114 &8092730058158636106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a1a731a2426ea48b428286172e2a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Player.PlayerDamageHandler
+  motor: {fileID: 8991136442795393390}
+  animationController: {fileID: 2093264284246443571}
+  input: {fileID: 2770721750483625506}
+--- !u!114 &1541609911765179319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcb49a4e24f4454386689a22784e470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Combat.PlayerPlaceholderAttack
+  input: {fileID: 2770721750483625506}
+  motor: {fileID: 8991136442795393390}
+  animationController: {fileID: 2093264284246443571}
+  ownerHealth: {fileID: 7693424300379504225}
+  damage: 25
+  knockbackForce: 6
+  hitDelay: 0.3
+  cooldown: 0.7
+  reach: 0.9
+  radius: 0.6
+  height: 1.1
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1001 &2800490407468723101
 PrefabInstance:
   m_ObjectHideFlags: 0

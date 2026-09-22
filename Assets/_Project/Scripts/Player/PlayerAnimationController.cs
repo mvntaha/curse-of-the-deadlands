@@ -12,6 +12,9 @@ namespace Deadlands.Player
         static readonly int IsAimingHash = Animator.StringToHash("IsAiming");
         static readonly int DodgeHash = Animator.StringToHash("Dodge");
         static readonly int AimPlaybackHash = Animator.StringToHash("AimPlayback");
+        static readonly int AttackHash = Animator.StringToHash("Attack");
+        static readonly int HitHash = Animator.StringToHash("Hit");
+        static readonly int DeadHash = Animator.StringToHash("Dead");
 
         [SerializeField] PlayerMotor motor;
         [SerializeField] Animator animator;
@@ -36,6 +39,10 @@ namespace Deadlands.Player
         void OnDisable() => motor.DodgeStarted -= OnDodgeStarted;
 
         void OnDodgeStarted() => animator.SetTrigger(DodgeHash);
+
+        public void PlayAttack() => animator.SetTrigger(AttackHash);
+        public void PlayHit() => animator.SetTrigger(HitHash);
+        public void SetDead(bool dead) => animator.SetBool(DeadHash, dead);
 
         void Update()
         {
