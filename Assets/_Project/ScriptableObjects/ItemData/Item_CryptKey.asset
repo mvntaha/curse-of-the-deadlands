@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 565ecae55c30daa42ab49b06ba15dc19, type: 3}
+  m_Name: Item_CryptKey
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Inventory.ItemData
+  id: crypt_key
+  displayName: Crypt Key
+  description: A rusted key stamped with a skull.
+  kind: 1
+  maxStack: 1
+  healAmount: 0
+  ammoType: 0
+  weapon: {fileID: 0}

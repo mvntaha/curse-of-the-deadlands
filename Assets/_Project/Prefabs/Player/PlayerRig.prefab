@@ -448,6 +448,11 @@ GameObject:
   - component: {fileID: 1076524044997494021}
   - component: {fileID: 737988190815323869}
   - component: {fileID: 8297489565741924224}
+  - component: {fileID: 3234211657768629877}
+  - component: {fileID: 3049466368755054322}
+  - component: {fileID: 5559933955346565111}
+  - component: {fileID: 6550552167779079028}
+  - component: {fileID: 636109788321147817}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -527,6 +532,7 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: e90e66aa0d10dff4da915abd147426d2, type: 2}
   input: {fileID: 2770721750483625506}
   viewTransform: {fileID: 8886452207350200401}
+  stamina: {fileID: 3234211657768629877}
 --- !u!114 &2093264284246443571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,10 +648,6 @@ MonoBehaviour:
   startingLoadout:
   - weapon: {fileID: 11400000, guid: 6b921627d8919ce45be90ed7a4acdad9, type: 2}
     loadedAmmo: -1
-  - weapon: {fileID: 11400000, guid: 295e0921853f33d45af80a3619aac051, type: 2}
-    loadedAmmo: -1
-  - weapon: {fileID: 11400000, guid: 7a2c4ac284029c64086f5993bc6aadd2, type: 2}
-    loadedAmmo: -1
   - weapon: {fileID: 11400000, guid: 7bf96363a93802e40a69f62e9a697065, type: 2}
     loadedAmmo: -1
   fists: {fileID: 11400000, guid: 66957123382e72f4bb63e4dc240898fb, type: 2}
@@ -663,6 +665,105 @@ MonoBehaviour:
   muzzleFlashTime: 0.05
   fleshColor: {r: 0.45, g: 0.02, b: 0.02, a: 1}
   worldColor: {r: 0.55, g: 0.52, b: 0.48, a: 1}
+--- !u!114 &3234211657768629877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8c6211b2c486e4bb57f26acda4fc78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Player.PlayerStamina
+  max: 100
+  regenPerSecond: 22
+  regenDelay: 0.8
+  exhaustedRecoverFraction: 0.3
+--- !u!114 &3049466368755054322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11874796c3269ab4f81ce9c33cbd7131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Inventory.PlayerInventory
+  input: {fileID: 2770721750483625506}
+  ammo: {fileID: 1076524044997494021}
+  weapons: {fileID: 8297489565741924224}
+  health: {fileID: 7693424300379504225}
+  quickHealItem: {fileID: 11400000, guid: 65b9937bb30e8d843b3e94017b0e620d, type: 2}
+  useCooldown: 0.8
+  startingItems:
+  - item: {fileID: 11400000, guid: 65b9937bb30e8d843b3e94017b0e620d, type: 2}
+    count: 1
+--- !u!114 &5559933955346565111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd4c6c0b831abc4db75738e5dfea31c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Player.PlayerInteractor
+  input: {fileID: 2770721750483625506}
+  motor: {fileID: 8991136442795393390}
+  radius: 1.6
+  maxAngle: 75
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294966015
+--- !u!114 &6550552167779079028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fce78425e81f7cd4485a977bc8ea4b4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Combat.ShoveAbility
+  input: {fileID: 2770721750483625506}
+  motor: {fileID: 8991136442795393390}
+  stamina: {fileID: 3234211657768629877}
+  animationController: {fileID: 2093264284246443571}
+  ownerHealth: {fileID: 7693424300379504225}
+  unlocked: 0
+  staminaCost: 25
+  cooldown: 3
+  range: 1.8
+  arc: 120
+  staggerDuration: 1.2
+  pushDistance: 1.5
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &636109788321147817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5a287d30a3f504daa4951d37503b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Progression.PlayerProgression
+  health: {fileID: 7693424300379504225}
+  stamina: {fileID: 3234211657768629877}
+  weapons: {fileID: 8297489565741924224}
+  shove: {fileID: 6550552167779079028}
 --- !u!1001 &2800490407468723101
 PrefabInstance:
   m_ObjectHideFlags: 0
