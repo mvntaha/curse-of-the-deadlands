@@ -39,6 +39,10 @@ namespace Deadlands.Core.Input
         /// <summary>Weapon slot chosen directly (0-based).</summary>
         public event Action<int> SlotPressed;
         public event Action StrugglePressed;
+        public event Action InteractPressed;
+        public event Action UseHealPressed;
+        public event Action InventoryPressed;
+        public event Action ShovePressed;
 
         void Awake()
         {
@@ -60,6 +64,10 @@ namespace Deadlands.Core.Input
             Bind("NextWeapon", () => NextWeaponPressed?.Invoke());
             Bind("PrevWeapon", () => PrevWeaponPressed?.Invoke());
             Bind("Struggle", () => StrugglePressed?.Invoke());
+            Bind("Interact", () => InteractPressed?.Invoke());
+            Bind("UseHeal", () => UseHealPressed?.Invoke());
+            Bind("Inventory", () => InventoryPressed?.Invoke());
+            Bind("Shove", () => ShovePressed?.Invoke());
             for (int i = 0; i < 4; i++)
             {
                 int slot = i;
