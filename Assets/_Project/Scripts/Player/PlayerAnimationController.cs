@@ -15,6 +15,18 @@ namespace Deadlands.Player
         static readonly int AttackHash = Animator.StringToHash("Attack");
         static readonly int HitHash = Animator.StringToHash("Hit");
         static readonly int DeadHash = Animator.StringToHash("Dead");
+        static readonly int ArmedHash = Animator.StringToHash("Armed");
+        static readonly int MeleeStyleHash = Animator.StringToHash("MeleeStyle");
+        static readonly int ReloadHash = Animator.StringToHash("Reload");
+        static readonly int GrabbedHash = Animator.StringToHash("Grabbed");
+        static readonly int ReloadSpeedHash = Animator.StringToHash("ReloadSpeed");
+        static readonly int ReloadCancelHash = Animator.StringToHash("ReloadCancel");
+
+        [Header("Recoil")]
+        [SerializeField] float recoilRecovery = 12f;
+
+        bool armed;
+        float recoil;
 
         [SerializeField] PlayerMotor motor;
         [SerializeField] Animator animator;
@@ -40,15 +52,45 @@ namespace Deadlands.Player
 
         void OnDodgeStarted() => animator.SetTrigger(DodgeHash);
 
-        public void PlayAttack() => animator.SetTrigger(AttackHash);
+        /// <summary>Melee swing. Style 0 = punch (fists), 1 = overhead slash (axe/bat).</summary>
+        public void PlayMelee(int style)
+        {
+            animator.SetInteger(MeleeStyleHash, style);
+            animator.SetTrigger(AttackHash);
+        }
+
         public void PlayHit() => animator.SetTrigger(HitHash);
         public void SetDead(bool dead) => animator.SetBool(DeadHash, dead);
+        /// <summary>Plays the (1 s authored) reload clip stretched to <paramref name="duration"/> seconds.</summary>
+        public void PlayReload(float duration)
+        {
+            animator.SetFloat(ReloadSpeedHash, 1f / Mathf.Max(0.1f, duration));
+            animator.ResetTrigger(ReloadCancelHash);
+            animator.SetTrigger(ReloadHash);
+        }
+
+        public void CancelReload()
+        {
+            animator.ResetTrigger(ReloadHash);
+            animator.SetTrigger(ReloadCancelHash);
+        }
+        public void SetGrabbed(bool grabbed) => animator.SetBool(GrabbedHash, grabbed);
+
+        /// <summary>True while a firearm is equipped (gun-holding locomotion + aim pose).</summary>
+        public void SetArmed(bool value)
+        {
+            armed = value;
+            animator.SetBool(ArmedHash, value);
+        }
+
+        public void AddRecoil(float degrees) => recoil += degrees;
 
         void Update()
         {
             float dt = Time.deltaTime;
             animator.SetFloat(SpeedHash, motor.Speed, speedDampTime, dt);
-            animator.SetBool(IsAimingHash, motor.IsAiming);
+            // The gun aim pose only makes sense with a firearm; melee aiming just orients the character.
+            animator.SetBool(IsAimingHash, motor.IsAiming && armed);
 
             Vector3 local = transform.InverseTransformDirection(motor.HorizontalVelocity);
             bool backpedal = motor.IsAiming && local.z < -0.1f;
@@ -83,8 +125,10 @@ namespace Deadlands.Player
                     upperBodyBone.rotation = Quaternion.AngleAxis(-legYaw, Vector3.up) * upperBodyBone.rotation;
             }
 
-            if (upperBodyBone && Mathf.Abs(aimPitch) > 0.01f)
-                upperBodyBone.rotation = Quaternion.AngleAxis(aimPitch, transform.right) * upperBodyBone.rotation;
+            recoil = Mathf.Lerp(recoil, 0f, 1f - Mathf.Exp(-recoilRecovery * dt));
+            float pitch = aimPitch - recoil; // recoil kicks the upper body up/back
+            if (upperBodyBone && Mathf.Abs(pitch) > 0.01f)
+                upperBodyBone.rotation = Quaternion.AngleAxis(pitch, transform.right) * upperBodyBone.rotation;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Deadlands.Player
         [SerializeField] PlayerMotor motor;
         [SerializeField] PlayerAnimationController animationController;
         [SerializeField] PlayerInputReader input;
+        [SerializeField] PlayerStruggle struggle;
 
         Health health;
 
@@ -41,7 +42,8 @@ namespace Deadlands.Player
 
         void OnDamaged(Health _, DamageInfo info)
         {
-            if (!health.IsDead) animationController.PlayHit();
+            // While grabbed, the struggle animation already sells the bites.
+            if (!health.IsDead && !(struggle && struggle.IsGrabbed)) animationController.PlayHit();
         }
 
         void OnDied(Health _, DamageInfo info)

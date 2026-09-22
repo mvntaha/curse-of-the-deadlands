@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &786401596358162810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7691452308504372968}
+  m_Layer: 0
+  m_Name: CombatFx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7691452308504372968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786401596358162810}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6302694898076906045}
+  - {fileID: 2042293771440996909}
+  m_Father: {fileID: 9143165548086613307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1396076312918094628
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,8 +236,200 @@ Transform:
   m_Children:
   - {fileID: 3870826377659422868}
   - {fileID: 8886452207350200401}
+  - {fileID: 7691452308504372968}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2969417503137684329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5723582907954791558}
+  - component: {fileID: 8464737067203053142}
+  m_Layer: 0
+  m_Name: MuzzleFlash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5723582907954791558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2969417503137684329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3870826377659422868}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &8464737067203053142
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2969417503137684329}
+  m_Enabled: 0
+  serializedVersion: 12
+  m_Type: 2
+  m_Color: {r: 1, g: 0.75, b: 0.4, a: 1}
+  m_Intensity: 4
+  m_Range: 5
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!1 &6597641930689240003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6302694898076906045}
+  - component: {fileID: 8674255232692671393}
+  m_Layer: 0
+  m_Name: TracerPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6302694898076906045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6597641930689240003}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7691452308504372968}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8674255232692671393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6597641930689240003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01f99fbe90af2048acb2520473f66ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Core.Pooling.GameObjectPool
+  prefab: {fileID: 5338583632838299289, guid: a6e912ffce7e2c04aba079f5ab25e29c, type: 3}
+  prewarmCount: 16
+  maxSize: 64
+--- !u!1 &7023708901739505536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2042293771440996909}
+  - component: {fileID: 9023555488346825064}
+  m_Layer: 0
+  m_Name: ImpactPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2042293771440996909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023708901739505536}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7691452308504372968}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9023555488346825064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7023708901739505536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01f99fbe90af2048acb2520473f66ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Core.Pooling.GameObjectPool
+  prefab: {fileID: 8458719088090795659, guid: 090e836c8f73ea047a09eccb741b5ec3, type: 3}
+  prewarmCount: 16
+  maxSize: 64
 --- !u!1 &7082573362976168197
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +445,9 @@ GameObject:
   - component: {fileID: 2093264284246443571}
   - component: {fileID: 7693424300379504225}
   - component: {fileID: 8092730058158636106}
-  - component: {fileID: 1541609911765179319}
+  - component: {fileID: 1076524044997494021}
+  - component: {fileID: 737988190815323869}
+  - component: {fileID: 8297489565741924224}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -242,6 +469,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2402650942327655542}
+  - {fileID: 5723582907954791558}
   m_Father: {fileID: 9143165548086613307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &5455918393042335261
@@ -311,6 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89386574aad08714094a0bb6011ffd7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Player.PlayerAnimationController
+  recoilRecovery: 12
   motor: {fileID: 8991136442795393390}
   animator: {fileID: 8626577577492829708}
   cameraRig: {fileID: 7587626936830413060}
@@ -350,7 +579,8 @@ MonoBehaviour:
   motor: {fileID: 8991136442795393390}
   animationController: {fileID: 2093264284246443571}
   input: {fileID: 2770721750483625506}
---- !u!114 &1541609911765179319
+  struggle: {fileID: 737988190815323869}
+--- !u!114 &1076524044997494021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,23 +589,80 @@ MonoBehaviour:
   m_GameObject: {fileID: 7082573362976168197}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebcb49a4e24f4454386689a22784e470, type: 3}
+  m_Script: {fileID: 11500000, guid: ed82323e81137c7488aa6add84f07a6d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Combat.PlayerPlaceholderAttack
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Combat.AmmoStore
+  ammo:
+  - type: 1
+    startAmount: 24
+    maxCarry: 60
+  - type: 2
+    startAmount: 6
+    maxCarry: 20
+  - type: 3
+    startAmount: 40
+    maxCarry: 120
+--- !u!114 &737988190815323869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46828abbe9974a74e84e15812c64dd7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Player.PlayerStruggle
   input: {fileID: 2770721750483625506}
   motor: {fileID: 8991136442795393390}
   animationController: {fileID: 2093264284246443571}
+  health: {fileID: 7693424300379504225}
+  regrabImmunity: 2
+  biteTickInterval: 0.5
+--- !u!114 &8297489565741924224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082573362976168197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 924e02e0df47c4e4a8d968fe6093a871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Combat.PlayerWeaponController
+  input: {fileID: 2770721750483625506}
+  motor: {fileID: 8991136442795393390}
+  animationController: {fileID: 2093264284246443571}
+  ammoStore: {fileID: 1076524044997494021}
   ownerHealth: {fileID: 7693424300379504225}
-  damage: 25
-  knockbackForce: 6
-  hitDelay: 0.3
-  cooldown: 0.7
-  reach: 0.9
-  radius: 0.6
-  height: 1.1
-  targetLayers:
+  aimCamera: {fileID: 5893606680424074690}
+  weaponModelRoot: {fileID: 6880156202415795104}
+  startingLoadout:
+  - weapon: {fileID: 11400000, guid: 6b921627d8919ce45be90ed7a4acdad9, type: 2}
+    loadedAmmo: -1
+  - weapon: {fileID: 11400000, guid: 295e0921853f33d45af80a3619aac051, type: 2}
+    loadedAmmo: -1
+  - weapon: {fileID: 11400000, guid: 7a2c4ac284029c64086f5993bc6aadd2, type: 2}
+    loadedAmmo: -1
+  - weapon: {fileID: 11400000, guid: 7bf96363a93802e40a69f62e9a697065, type: 2}
+    loadedAmmo: -1
+  fists: {fileID: 11400000, guid: 66957123382e72f4bb63e4dc240898fb, type: 2}
+  switchTime: 0.3
+  shotMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 4294966011
+  meleeMask:
+    serializedVersion: 2
+    m_Bits: 4294966011
+  chestHeight: 1.35
+  tracerPool: {fileID: 8674255232692671393}
+  impactPool: {fileID: 9023555488346825064}
+  muzzleFlash: {fileID: 8464737067203053142}
+  muzzleFlashTime: 0.05
+  fleshColor: {r: 0.45, g: 0.02, b: 0.02, a: 1}
+  worldColor: {r: 0.55, g: 0.52, b: 0.48, a: 1}
 --- !u!1001 &2800490407468723101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -773,6 +1060,11 @@ Transform:
 --- !u!4 &2402650942327655542 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c3c462bed9ef0624b93056a1e0ba62b2, type: 3}
+  m_PrefabInstance: {fileID: 2800490407468723101}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6880156202415795104 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8765815414337716285, guid: c3c462bed9ef0624b93056a1e0ba62b2, type: 3}
   m_PrefabInstance: {fileID: 2800490407468723101}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7344988297428912754 stripped

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3872c2c74487bbc4e8d1a5113c0e1922, type: 3}
+  m_Name: Weapon_Axe
+  m_EditorClassIdentifier: Assembly-CSharp::Deadlands.Combat.WeaponData
+  displayName: Axe
+  kind: 1
+  handModelName: Axe
+  handModelScale: 0.6
+  damage: 30
+  knockbackForce: 8
+  fireMode: 0
+  ammoType: 0
+  magazineSize: 12
+  fireInterval: 0.25
+  reloadTime: 1.4
+  range: 40
+  pellets: 1
+  spread: 1
+  recoilKick: 4
+  swingDuration: 0.9
+  swingHitTime: 0.4
+  reach: 1.1
+  hitRadius: 0.75
+  maxDurability: 15
+  durabilityLossPerHit: 1
