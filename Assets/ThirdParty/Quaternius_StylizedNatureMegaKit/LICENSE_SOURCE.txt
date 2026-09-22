@@ -1,0 +1,5 @@
+Source: https://quaternius.itch.io/stylized-nature-megakit
+Author: Quaternius (quaternius.com)
+License: CC0 1.0 Universal (public domain) - https://creativecommons.org/publicdomain/zero/1.0/
+Downloaded: 2026-09-22 via OpenGameArt mirror https://opengameart.org/content/stylized-nature-megakit (Standard/free version)
+Note: FBX (Unity) + textures only.

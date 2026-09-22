@@ -1,0 +1,5 @@
+Source: https://quaternius.com/packs/medievalvillagemegakit.html
+Author: Quaternius (quaternius.com)
+License: CC0 1.0 Universal (public domain) - https://creativecommons.org/publicdomain/zero/1.0/
+Downloaded: 2026-09-22 via OpenGameArt mirror https://opengameart.org/content/medieval-village-megakit (Standard/free version)
+Note: FBX + textures only.
